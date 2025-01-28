@@ -4,6 +4,7 @@
 """
 
 import os
+import requests
 import unittest
 from unittest.mock import patch, Mock
 from auth import load_bluesky_credentials
@@ -69,14 +70,26 @@ class TestCreateBlueSkySession(unittest.TestCase):
     def test_unsuccesful_authentication(self, mock_post):
         """
         Test if authentication was not successful
+
+        Password or User was incorrect
         """
         mock_response = Mock()
-        mock_response.json.return_value = {"accessJwt": "mocked_jwt_token"}
         mock_response.status_code = 401
+        mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError("401 Client Error: Unauthorized")
         mock_post.return_value = mock_response
         
-        with self.assertRaises(SystemExit) as cm:
+        with self.assertRaises(SystemExit):
             create_bluesky_session(username = self.username, password = self.password)
+    
+    @patch("auth.requests.post")
+    def test_invalid_request_error(self, mock_post):
+        mock_response = Mock()
+        mock_response.status_code = 400
+        mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError("400 Client Error: Bad Request")
+        mock_post.return_value = mock_response
+
+        with self.assertRaises(SystemExit):
+            create_bluesky_session(self.username, self.password)
 
 
 if __name__ == "__main__":
