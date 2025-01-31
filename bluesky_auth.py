@@ -25,8 +25,6 @@ def load_bluesky_credentials() -> tuple[str, str]:
     if load_dotenv():
         handle = os.getenv("BLUESKY_HANDLE")
         password = os.getenv("BLUESKY_APP_PASSWORD")
-        print(handle)
-        print(password)
         assert handle != "", "BLUESKY_HANDLE can not be empty."
         assert password != "", "BLUE_APP_PASSWORD can not be empty."
         return (handle, password)
