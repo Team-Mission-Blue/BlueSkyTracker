@@ -16,19 +16,20 @@ Author:
 - Andrew Markarian
 """
 
-import bluesky_auth
+import bluesky
 import weather
 
 def main():
     print("Loading Credentials...")
-    bluesky_handle, bluesky_app_password = bluesky_auth.load_bluesky_credentials()
+    bluesky_handle, bluesky_app_password = bluesky.load_bluesky_credentials()
 
     print("Athenticating...")
-    access_token = bluesky_auth.create_bluesky_session(bluesky_handle, bluesky_app_password)
+    access_token = bluesky.create_bluesky_session(bluesky_handle, bluesky_app_password)
     print("Authentication successful.")
 
     print("Fetching Forecast")
     forecast = weather.fetch_weather_forecast()
+    print(forecast)
     
 if __name__ == "__main__":
     main()
