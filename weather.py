@@ -23,7 +23,7 @@ def fetch_weather_forecast():
 
         forecast_days = []
 
-        for i in range(4):
+        for i in range(2):
             period = forecast[i]
             forecast_days.append({
                 "name": period.get("name"),
@@ -35,10 +35,8 @@ def fetch_weather_forecast():
                 "detailedForecast": period.get("detailedForecast")
             })
 
-        # Group forecast into two-day structure
         consolidated_forecast = {
-            "day_1": forecast_days[:2],
-            "day_2": forecast_days[2:4],
+            "day_1": forecast_days[:2]
         }
 
         return consolidated_forecast
