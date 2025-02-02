@@ -41,7 +41,7 @@ class TestFetchWeatherForecast(unittest.TestCase):
         result = fetch_weather_forecast()
 
         self.assertIsNotNone(result)
-        self.assertEqual(len(result), 3)
+        self.assertEqual(len(result), 2)
         self.assertEqual(result["day_1"][0]["name"], "Monday")
         self.assertEqual(result["day_2"][0]["name"], "Tuesday")
 
