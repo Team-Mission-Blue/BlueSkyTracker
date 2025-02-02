@@ -2,7 +2,7 @@
     This module contains unit tests for the 'weather.py' module, which handles
     weather data fetching and extraction functionality
 """
-
+#pylint: disable=E0401
 import unittest
 from unittest.mock import patch, Mock
 import requests
@@ -15,6 +15,7 @@ class TestFetchWeatherForecast(unittest.TestCase):
 
     def setUp(self):
         """ Sample mock API response """
+        #pylint: disable=C0301
         self.mock_response = {
             "properties": {
                 "periods": [
@@ -27,7 +28,7 @@ class TestFetchWeatherForecast(unittest.TestCase):
                 ]
             }
         }
-    
+
     @patch("requests.get")
     def test_successful_api_call(self, mock_get):
         """
@@ -37,7 +38,7 @@ class TestFetchWeatherForecast(unittest.TestCase):
         mock_response.json.return_value = self.mock_response
         mock_response.status_code = 200
         mock_get.return_value = mock_response
-        
+
         result = fetch_weather_forecast()
 
         self.assertIsNotNone(result)
@@ -55,7 +56,7 @@ class TestFetchWeatherForecast(unittest.TestCase):
         result = fetch_weather_forecast()
 
         self.assertIsNone(result)
-    
+
     @patch("requests.get")
     def test_api_404_error(self, mock_get):
         """
@@ -71,12 +72,13 @@ class TestFetchWeatherForecast(unittest.TestCase):
         result = fetch_weather_forecast()
 
         self.assertIsNone(result)
-    
+
     @patch("requests.get")
     def test_api_500_error(self, mock_get):
         """
         Test when the API return a 500 Server Error
         """
+        #pylint: disable=C0301
         mock_response = Mock()
         mock_response.status_code = 500
         mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError("500 Internal Server Error")
