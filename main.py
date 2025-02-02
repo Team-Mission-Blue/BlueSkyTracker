@@ -18,6 +18,7 @@ Author:
 
 import bluesky
 import weather
+import ai
 
 def main():
     print("Loading Credentials...")
@@ -29,7 +30,12 @@ def main():
 
     print("Fetching Forecast")
     forecast = weather.fetch_weather_forecast()
-    print(forecast)
+    
+    print("Formatting Weather Data")
+    forecast = weather.format_weather_data(forecast)
+
+    print("Generating AI Text")
+    ai.textGeneration(forecast)
     
 if __name__ == "__main__":
     main()

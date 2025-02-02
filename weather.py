@@ -17,7 +17,7 @@ def fetch_weather_forecast():
 
         forecast_days = []
 
-        for i in range(6):
+        for i in range(4):
             period = forecast[i]
             forecast_days.append({
                 "name": period.get("name"),
@@ -29,11 +29,10 @@ def fetch_weather_forecast():
                 "detailedForecast": period.get("detailedForecast")
             })
         
-        # Group forecast into three-day structure
+        # Group forecast into two-day structure
         consolidated_forecast = {
             "day_1": forecast_days[:2],
             "day_2": forecast_days[2:4],
-            "day_3": forecast_days[4:6]
         }
 
         return consolidated_forecast
@@ -41,3 +40,17 @@ def fetch_weather_forecast():
     except requests.exceptions.RequestException as err:
         print("Error Fetching Weather Data: ", {err})
         return None
+    
+def format_weather_data(weatherData):
+    weather_input = ""
+    for day, forecast in weatherData.items():
+        weather_input += f"{forecast[0]["name"]} & {forecast[1]["name"]}:\n"
+        for period in forecast:
+            weather_input += (
+                f"Temperature: {period["temperature"]}{period["temperatureUnit"]}\n"
+                f"Probability Of Precipitation: {period["probabilityOfPrecipitation"]}\n"
+                f"Wind Speed: {period["windSpeed"]}, Direction {period["windDirection"]}\n"
+                f"Detailed Forecast: {period["detailedForecast"]}\n\n"
+            )
+    print(weather_input)
+    return weather_input
