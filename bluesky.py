@@ -1,6 +1,6 @@
 """
-This module handles all interactions with the Bluesky API, including authentication, session management, 
-and posting formatted weather updates to the Bluesky social media platform.
+This module handles all interactions with the Bluesky API, including authentication, 
+session management, and posting formatted weather updates to the Bluesky social media platform.
 """
 
 import os
@@ -9,7 +9,7 @@ import requests
 from dotenv import load_dotenv
 
 # Load enviornment variables from the .env file
-def load_bluesky_credentials() -> tuple[str, str]:
+def load_bluesky_credentials():
     """
     Validates and returns user BlueSky credentials
     """

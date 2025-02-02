@@ -15,6 +15,7 @@ Dependencies:
 Author:
 - Andrew Markarian
 """
+#pylint: disable=W0612
 
 import bluesky
 import weather

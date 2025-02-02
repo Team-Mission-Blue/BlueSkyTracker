@@ -21,7 +21,7 @@ def generate_ai_text(forecast):
         messages=[
             {
                 "role": "system",
-                "content": "You are a young meteorologist explaining the next three day's forecast in Syracuse NY in the morning(Say 'Good Morning Syracuse!'). Act like you're making a social media post. Make sure to Consildate the days into one description (don't do morning and night seperately)",
+                "content": "You are a young meteorologist explaining today's forecast in Syracuse NY in the morning(Say 'Good Morning Syracuse!'). Act like you're making a social media post. Make sure to Consildate the days into one description (don't do morning and night seperately). Make sure it's under 300 characters",
             },
             {
                 "role": "user",
