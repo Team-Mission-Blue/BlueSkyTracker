@@ -1,6 +1,6 @@
 """
-This module handles all interactions with the Bluesky API, including authentication, session management, 
-and posting formatted weather updates to the Bluesky social media platform.
+This module handles all interactions with the Bluesky API, including authentication, 
+session management, and posting formatted weather updates to the Bluesky social media platform.
 """
 
 import os
