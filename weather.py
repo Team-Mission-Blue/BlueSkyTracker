@@ -53,13 +53,13 @@ def format_weather_data(weather_data):
     """
     weather_input = ""
     for forecast in weather_data.values():
-        weather_input += f"{forecast[0]["name"]} & {forecast[1]["name"]}:\n"
+        weather_input += f"{forecast[0]['name']} & {forecast[1]['name']}:\n"
         for period in forecast:
             weather_input += (
-                f"Temperature: {period["temperature"]}{period["temperatureUnit"]}\n"
-                f"Probability Of Precipitation: {period["probabilityOfPrecipitation"]}\n"
-                f"Wind Speed: {period["windSpeed"]}, Direction {period["windDirection"]}\n"
-                f"Detailed Forecast: {period["detailedForecast"]}\n\n"
+                f"Temperature: {period['temperature']}{period['temperatureUnit']}\n"
+                f"Probability Of Precipitation: {period['probabilityOfPrecipitation']}\n"
+                f"Wind Speed: {period['windSpeed']}, Direction {period['windDirection']}\n"
+                f"Detailed Forecast: {period['detailedForecast']}\n\n"
             )
     print(weather_input)
     return weather_input
