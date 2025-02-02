@@ -2,11 +2,15 @@
 
 > pip install openai
 """
+# pylint: disable=C0301
 import os
 from openai import OpenAI
 
-def textGeneration(forecast):
-    # To authenticate with the model you will need to generate a personal access token (PAT) in your GitHub settings. 
+def generate_ai_text(forecast):
+    """
+    Method that generates AI text
+    """
+    # To authenticate with the model you will need to generate a personal access token (PAT) in your GitHub settings.
     # Create your PAT token by following instructions here: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
     client = OpenAI(
         base_url="https://models.inference.ai.azure.com",

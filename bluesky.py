@@ -1,14 +1,6 @@
 """
-The Module contains the Authentication methods for the following:
-
-BlueSkyAPI
-NWSAPI
-OpenAIAPI
-
-Dependencies:
-
-Author:
-- Andrew Markarian
+This module handles all interactions with the Bluesky API, including authentication, session management, 
+and posting formatted weather updates to the Bluesky social media platform.
 """
 
 import os
