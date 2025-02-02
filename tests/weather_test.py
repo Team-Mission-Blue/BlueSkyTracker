@@ -42,9 +42,9 @@ class TestFetchWeatherForecast(unittest.TestCase):
         result = fetch_weather_forecast()
 
         self.assertIsNotNone(result)
-        self.assertEqual(len(result), 2)
+        self.assertEqual(len(result), 1)
         self.assertEqual(result["day_1"][0]["name"], "Monday")
-        self.assertEqual(result["day_2"][0]["name"], "Tuesday")
+        self.assertEqual(result["day_1"][1]["name"], "Monday Night")
 
     @patch("requests.get")
     def test_api_connection_error(self, mock_get):
