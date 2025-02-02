@@ -20,4 +20,5 @@ jobs:
         ./setup.sh
     - name: Analysing the code with pylint
       run: |
+        source .virtualenv/bin/activate
         pylint $(git ls-files '*.py')
