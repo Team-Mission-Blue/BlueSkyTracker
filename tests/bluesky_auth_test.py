@@ -6,10 +6,8 @@
 # pylint: disable=E0401
 # pylint: disable=W0613
 import unittest
-from unittest.mock import patch, Mock
-import requests
+from unittest.mock import patch
 from bluesky import load_bluesky_credentials
-from bluesky import create_bluesky_session
 
 class TestLoadCredentials(unittest.TestCase):
     """

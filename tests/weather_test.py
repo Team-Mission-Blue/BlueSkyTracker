@@ -93,6 +93,9 @@ class TestFormatWeatherData(unittest.TestCase):
     Testing the format_weather_data method
     """
     def test_basic_input(self):
+        """
+        Testing basic Input Functionality Using Diff Tests
+        """
         sample_data = {
             "day_1": [
                 {

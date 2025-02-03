@@ -32,13 +32,13 @@ def create_bluesky_post(username: str, password: str, post_text: str):
     try:
         client.login(username, password)
     except Exception as e:
-        raise RuntimeError(f"Login failed: {e}")
-    
+        raise RuntimeError(f"Login failed: {e}") from e
+
     try:
         post = client.send_post(post_text)
         post_id = post.uri.split('/')[-1]
     except Exception as e:
-        raise RuntimeError(f"Post creation failed: {e}")
+        raise RuntimeError(f"Post creation failed: {e}") from e
 
     url = f"https://bsky.app/profile/{username}/post/{post_id}"
     return url

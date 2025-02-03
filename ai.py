@@ -5,7 +5,7 @@
 # pylint: disable=C0301
 import os
 import logging
-from openai import OpenAI
+from openai import OpenAI, OpenAIError
 
 def generate_ai_text(forecast):
     """
@@ -17,7 +17,7 @@ def generate_ai_text(forecast):
         api_key=os.getenv("OPENAI_API_KEY")
         if not api_key:
             raise ValueError("Missing API Key")
-    
+
         client = OpenAI(
             base_url="https://models.inference.ai.azure.com",
             api_key=api_key,
@@ -43,15 +43,17 @@ def generate_ai_text(forecast):
         if not response or not response.choices or not response.choices[0].message:
             raise ValueError("Unexpect API response format")
 
-        aiText = response.choices[0].message.content
-        return aiText
+        ai_text = response.choices[0].message.content
+        return ai_text
 
-    except ValueError as ve:
-        logging.error(f"ValueError: {ve}")
+    except ValueError as err:
+        logging.error("ValueError: %s", err)
         return "Daily Weather Forecast Is down Today"
-    
-    except Exception as e:
-        logging.error(f"Unexpected error: {e}")
-        return "Daily Weather Forecast Is down Today"
-    
 
+    except OpenAIError as err:
+        logging.error("OpenAIError: %s", err)
+        return "Daily Weather Forecast Is down Today"
+
+    except TimeoutError as err:
+        logging.error("Request Time Out: %s", err)
+        return "Daily Weather Forecast Is down Today"
