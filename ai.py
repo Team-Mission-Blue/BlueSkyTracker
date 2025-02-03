@@ -4,6 +4,7 @@
 """
 # pylint: disable=C0301
 import os
+import logging
 from openai import OpenAI
 
 def generate_ai_text(forecast):
@@ -12,26 +13,45 @@ def generate_ai_text(forecast):
     """
     # To authenticate with the model you will need to generate a personal access token (PAT) in your GitHub settings.
     # Create your PAT token by following instructions here: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-    client = OpenAI(
-        base_url="https://models.inference.ai.azure.com",
-        api_key=os.getenv("OPENAI_API_KEY"),
-    )
+    try:
+        api_key=os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError("Missing API Key")
+    
+        client = OpenAI(
+            base_url="https://models.inference.ai.azure.com",
+            api_key=api_key,
+        )
 
-    response = client.chat.completions.create(
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a young meteorologist explaining today's forecast in Syracuse NY in the morning(Say 'Good Morning Syracuse!'). Act like you're making a social media post. Make sure to Consildate the days into one description (don't do morning and night seperately). Make sure it's under 300 characters",
-            },
-            {
-                "role": "user",
-                "content": forecast,
-            }
-        ],
-        model="gpt-4o",
-        temperature=1,
-        max_tokens=4096,
-        top_p=1
-    )
+        response = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a young meteorologist explaining today's forecast in Syracuse NY in the morning(Say 'Good Morning Syracuse!'). Act like you're making a social media post. Make sure to Consildate the days into one description (don't do morning and night seperately). Make sure it's under 300 characters",
+                },
+                {
+                    "role": "user",
+                    "content": forecast,
+                }
+            ],
+            model="gpt-4o",
+            temperature=1,
+            max_tokens=300,
+            top_p=1
+        )
 
-    print(response.choices[0].message.content)
+        if not response or not response.choices or not response.choices[0].message:
+            raise ValueError("Unexpect API response format")
+
+        aiText = response.choices[0].message.content
+        return aiText
+
+    except ValueError as ve:
+        logging.error(f"ValueError: {ve}")
+        return "Daily Weather Forecast Is down Today"
+    
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        return "Daily Weather Forecast Is down Today"
+    
+

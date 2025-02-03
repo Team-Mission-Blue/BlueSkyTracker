@@ -6,7 +6,7 @@
 import unittest
 from unittest.mock import patch, Mock
 import requests
-from weather import fetch_weather_forecast
+from weather import fetch_weather_forecast, format_weather_data
 
 class TestFetchWeatherForecast(unittest.TestCase):
     """
@@ -87,3 +87,38 @@ class TestFetchWeatherForecast(unittest.TestCase):
         result = fetch_weather_forecast()
 
         self.assertIsNone(result)
+
+class TestFormatWeatherData(unittest.TestCase):
+    """
+    Testing the format_weather_data method
+    """
+    def test_basic_input(self):
+        sample_data = {
+            "day_1": [
+                {
+                    "name": "Monday",
+                    "temperature": 75,
+                    "temperatureUnit": "F",
+                    "probabilityOfPrecipitation": 20,
+                    "windSpeed": "10 mph",
+                    "windDirection": "S",
+                    "detailedForecast": "Sunny with some clouds"
+                },
+                {
+                    "name": "Monday Night",
+                    "temperature": 55,
+                    "temperatureUnit": "F",
+                    "probabilityOfPrecipitation": 40,
+                    "windSpeed": "5 mph",
+                    "windDirection": "SW",
+                    "detailedForecast": "Clear Skies"
+                }
+            ]
+        }
+
+        result = format_weather_data(sample_data)
+        assert "Monday & Monday Night:" in result
+        assert "Temperature: 75F" in result
+        assert "Probability Of Precipitation: 40" in result
+        assert "Wind Speed: 5 mph, Direction SW" in result
+        assert "Detailed Forecast: Clear Skies" in result
