@@ -38,9 +38,9 @@ def main():
     bluesky_handle, bluesky_app_password = bluesky.load_bluesky_credentials()
 
     print("Creating Post...")
-    post_link = bluesky.create_bluesky_post(bluesky_handle, bluesky_app_password, post_text)
+    bluesky.create_bluesky_post(bluesky_handle, bluesky_app_password, post_text)
 
-    print(f"Post Link: {post_link}")
+    print("Post Created Succesfully")
 
 if __name__ == "__main__":
     main()
