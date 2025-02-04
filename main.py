@@ -25,21 +25,22 @@ def main():
     """
     This runs the main module of BlueSkyTracker
     """
-    print("Loading Credentials...")
-    bluesky_handle, bluesky_app_password = bluesky.load_bluesky_credentials()
-
-    print("Athenticating...")
-    access_token = bluesky.create_bluesky_session(bluesky_handle, bluesky_app_password)
-    print("Authentication successful.")
-
-    print("Fetching Forecast")
+    print("Fetching Forecast...")
     forecast = weather.fetch_weather_forecast()
 
-    print("Formatting Weather Data")
+    print("Formatting Weather Data...")
     forecast = weather.format_weather_data(forecast)
 
-    print("Generating AI Text")
-    ai.generate_ai_text(forecast)
+    print("Generating AI Text...")
+    post_text = ai.generate_ai_text(forecast)
+
+    print("Loading BlueSky Credentials...")
+    bluesky_handle, bluesky_app_password = bluesky.load_bluesky_credentials()
+
+    print("Creating Post...")
+    bluesky.create_bluesky_post(bluesky_handle, bluesky_app_password, post_text)
+
+    print("Post Created Succesfully")
 
 if __name__ == "__main__":
     main()

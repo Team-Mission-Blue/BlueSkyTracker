@@ -59,5 +59,5 @@ def format_weather_data(weather_data):
                 f"Wind Speed: {period['windSpeed']}, Direction {period['windDirection']}\n"
                 f"Detailed Forecast: {period['detailedForecast']}\n\n"
             )
-    print(weather_input)
+
     return weather_input

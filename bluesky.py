@@ -5,8 +5,8 @@ session management, and posting formatted weather updates to the Bluesky social 
 
 import os
 import sys
-import requests
 from dotenv import load_dotenv
+from atproto import Client
 
 # Load enviornment variables from the .env file
 def load_bluesky_credentials():
@@ -23,22 +23,22 @@ def load_bluesky_credentials():
     print(".env does not exist.")
     sys.exit(1)
 
-def create_bluesky_session(username: str, password: str):
+def create_bluesky_post(username: str, password: str, post_text: str):
     """
-    Authenticate BlueSky credentials and create a session to recieve access token.
-
-    returns:
-    - Access token (accessJwt) for authentication.
+    Creates post on BlueSky and returns its post link (URL)
     """
-    url = "https://bsky.social/xrpc/com.atproto.server.createSession"
-    payload = {"identifier": username, "password": password}
+    client = Client()
 
     try:
-        response = requests.post(url, json=payload, timeout=10)
-        response.raise_for_status()
-        session = response.json()
-        return session["accessJwt"]
-    except requests.exceptions.RequestException as err:
-        print("Error during authentication:", err)
-        print("Response:", response.text if "response" in locals() else "No response")
-        sys.exit(1)
+        client.login(username, password)
+    except Exception as e:
+        raise RuntimeError(f"Login failed: {e}") from e
+
+    try:
+        post = client.send_post(post_text)
+        post_id = post.uri.split('/')[-1]
+    except Exception as e:
+        raise RuntimeError(f"Post creation failed: {e}") from e
+
+    url = f"https://bsky.app/profile/{username}/post/{post_id}"
+    return url
