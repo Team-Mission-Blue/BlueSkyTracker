@@ -22,7 +22,13 @@ jobs:
         run: |
           chmod +x setup.sh
           ./setup.sh
-
+          
+      - name: Create .env file
+        run: |
+          echo "BLUESKY_HANDLE=${{ secrets.BLUESKY_HANDLE }}" > .env
+          echo "BLUESKY_APP_PASSWORD=${{ secrets.BLUESKY_APP_PASSWORD }}" >> .env
+          echo "OPENAI_API_KEY=${{ secret.OPENAI_API_KEY }}" >> .env
+          
       - name: Run the script
         env:
           BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
